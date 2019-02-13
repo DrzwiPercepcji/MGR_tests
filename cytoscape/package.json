@@ -1,0 +1,10 @@
+{
+	"name": "cytoscape-test",
+	"main": "example.js",
+	"description": "",
+	"version": "1.0.0",
+	"license": "MIT",
+	"dependencies": {
+		"cytoscape": "*"
+	}
+}
