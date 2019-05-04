@@ -1,5 +1,6 @@
 {
     "require": {
-        "clue/graph": "*"
+        "clue/graph": "*",
+        "graphp/algorithms": "*"
     }
 }
