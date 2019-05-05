@@ -7,6 +7,7 @@ var endTime;
 
 const path = '../samples/roadNet-PA.txt';
 const avoidDoubles = true;
+const indexes = [100, 1000, 10000, 100000];
 
 var cy = cytoscape();
 
@@ -41,6 +42,8 @@ fs.readFile(path, function (error, buffer) {
 
     uniqueNodes = [...new Set(nodes)];
 
+    console.log('Unique nodes: ' + uniqueNodes.length);
+
     console.log('Preparing done.');
 
     startTime = new Date();
@@ -73,15 +76,18 @@ function bfs() {
         directed: false
     });
 
-    var path = bfs.path;
-    var found = bfs.found;
-
-    path.select();
+    var path = bfs.path.nodes();
 
     console.log('BFS done.');
 
     endTime = new Date() - startTime;
     console.info('BFS time: %dms', endTime);
+
+    console.log('BFS elements: ' + path.nodes().length);
+
+    for (i = 0; i < indexes.length; i++) {
+        console.log(indexes[i] + ': ' + path[i].id());
+    }
 }
 
 function dfs() {
@@ -92,13 +98,16 @@ function dfs() {
         directed: false
     });
 
-    var path = dfs.path;
-    var found = dfs.found;
-
-    path.select();
+    var path = dfs.path.nodes();
 
     console.log('DFS done.');
 
     endTime = new Date() - startTime;
     console.info('DFS time: %dms', endTime);
+
+    console.log('DFS elements: ' + path.nodes().length);
+
+    for (i = 0; i < indexes.length; i++) {
+        console.log(indexes[i] + ': ' + path[i].id());
+    }
 }

@@ -9,6 +9,7 @@ ini_set('memory_limit', '-1');
 
 const PATH = '../samples/roadNet-PA.txt';
 const AVOID_DOUBLES = true;
+const INDEXES = [100, 1000, 10000, 100000];
 
 $graph = new Graph();
 
@@ -24,6 +25,9 @@ if ($file = fopen(PATH, 'r')) {
             $line = fgets($file);
             $splited = explode("\t", $line);
 
+            $splited[0] = (int)$splited[0];
+            $splited[1] = (int)$splited[1];
+
             if ($splited[0] < $splited[1]) {
                 $vertices[] = $splited[0];
                 $vertices[] = $splited[1];
@@ -35,6 +39,9 @@ if ($file = fopen(PATH, 'r')) {
             $line = fgets($file);
             $splited = explode("\t", $line);
 
+            $splited[0] = (int)$splited[0];
+            $splited[1] = (int)$splited[1];
+
             $vertices[] = $splited[0];
             $vertices[] = $splited[1];
             $edges[] = $splited;
@@ -42,6 +49,8 @@ if ($file = fopen(PATH, 'r')) {
     }
 
     $uniqueVertices = array_unique($vertices);
+
+    echo 'Unique vertices: ' . count($uniqueVertices) . PHP_EOL;
 
     echo 'Preparing done.' . PHP_EOL;
 
@@ -71,12 +80,20 @@ $startTime = microtime(true);
 $bfs = new BreadthFirst($graph->getVertex('v0'));
 $bfsResult = $bfs->getVertices()->getIds();
 
-echo count($bfsResult) .  PHP_EOL;
 echo 'BFS time: ' . (microtime(true) - $startTime) . PHP_EOL;
+echo 'BSF elements: ' . count($bfsResult) . PHP_EOL;
+
+foreach (INDEXES as $index) {
+    echo $index . ': ' . $bfsResult[$index] . PHP_EOL;
+}
 
 $startTime = microtime(true);
 $dfs = new DepthFirst($graph->getVertex('v0'));
 $dfsResult = $dfs->getVertices()->getIds();
 
-echo count($dfsResult) . PHP_EOL;
 echo 'DFS time: ' . (microtime(true) - $startTime) . PHP_EOL;
+echo 'DSF elements: ' . count($dfsResult) . PHP_EOL;
+
+foreach (INDEXES as $index) {
+    echo $index . ': ' . $dfsResult[$index] . PHP_EOL;
+}
