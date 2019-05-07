@@ -55,7 +55,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AstroPh.cs" />
+    <Compile Include="Enron.cs" />
     <Compile Include="Example.cs" />
     <Compile Include="RoadNetPA.cs" />
     <Compile Include="Test.cs" />

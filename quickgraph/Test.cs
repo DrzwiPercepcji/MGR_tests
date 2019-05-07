@@ -18,8 +18,8 @@ namespace quickgraph
 					RoadNetPA.Run();
 					break;
 
-				case "AstroPh":
-					AstroPh.Run();
+				case "Enron":
+					Enron.Run();
 					break;
 			}
 

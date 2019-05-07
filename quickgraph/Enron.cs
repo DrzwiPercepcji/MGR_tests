@@ -8,9 +8,9 @@ using QuickGraph.Algorithms.Observers;
 
 namespace quickgraph
 {
-	class AstroPh
+	class Enron
 	{
-		public const string path = "../../../samples/CA-AstroPh.txt";
+		public const string path = "../../../samples/Email-Enron.txt";
 		public const bool avoidDoubles = true;
 		public static readonly int[] indexes = { 100, 1000, 10000 };
 
@@ -126,7 +126,7 @@ namespace quickgraph
 			var bfs = new UndirectedBreadthFirstSearchAlgorithm<int, Edge>(graph);
 
 			bfs.DiscoverVertex += v => found.Add(v);
-			bfs.Compute(84424);
+			bfs.Compute(0);
 
 			watch.Stop();
 
@@ -150,7 +150,7 @@ namespace quickgraph
 			var dfs = new UndirectedDepthFirstSearchAlgorithm<int, Edge>(graph);
 
 			dfs.DiscoverVertex += v => found.Add(v);
-			dfs.Compute(84424);
+			dfs.Compute(0);
 
 			watch.Stop();
 
