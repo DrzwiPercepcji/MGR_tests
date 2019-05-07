@@ -81,7 +81,7 @@ $bfs = new BreadthFirst($graph->getVertex('v0'));
 $bfsResult = $bfs->getVertices()->getIds();
 
 echo 'BFS time: ' . (microtime(true) - $startTime) . PHP_EOL;
-echo 'BSF elements: ' . count($bfsResult) . PHP_EOL;
+echo 'BFS elements: ' . count($bfsResult) . PHP_EOL;
 
 foreach (INDEXES as $index) {
     echo $index . ': ' . $bfsResult[$index] . PHP_EOL;

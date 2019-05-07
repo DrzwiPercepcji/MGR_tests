@@ -2,15 +2,15 @@
 using QuickGraph;
 using QuickGraph.Algorithms.ShortestPath;
 
-/**
- * Source: https://danielbrannstrom.wordpress.com/2011/09/09/quickgraph/
- */
+/*
+* Source: https://danielbrannstrom.wordpress.com/2011/09/09/quickgraph/
+*/
 
 namespace quickgraph
 {
 	class Edge : IEdge<int>
 	{
-		public Edge(int s, int t, int w)
+		public Edge(int s, int t, int w = 1)
 		{
 			Source = s;
 			Target = t;
@@ -24,13 +24,12 @@ namespace quickgraph
 		public int Weight { get; set; }
 	}
 
-	class Graph : AdjacencyGraph<int, Edge> { }
+	class Graph : UndirectedGraph<int, Edge> { }
 
 	class Example
 	{
-		static void Main(string[] args)
+		public static void Run()
 		{
-			// Load data
 			int[,] data = new int[,]
 				{{131, 673, 234, 103, 18},
 				{201, 96, 342, 965, 150},
@@ -40,7 +39,6 @@ namespace quickgraph
 
 			int size = data.GetLength(0);
 
-			// Create graph
 			Graph g = new Graph();
 
 			for (int v = 0; v < size * size; v++)
@@ -61,18 +59,17 @@ namespace quickgraph
 			g.AddEdge(new Edge(lasti - 1, lasti, lastw));
 			g.AddEdge(new Edge(lasti - size, lasti, lastw));
 
-			// Optimize           
+			/*
 			var dijkstra = new DijkstraShortestPathAlgorithm<int, Edge>(g, e => (double)e.Weight);
 
 			dijkstra.Compute(0);
 
-			// Print result
 			double result = dijkstra.Distances[g.VertexCount - 1];
 
 			result += data[0, 0];
 
-			Console.WriteLine("result is : " + result);
-			Console.ReadKey();
+			Console.WriteLine("Result is : " + result);
+			*/
 		}
 	}
 }
