@@ -7,15 +7,13 @@ var endTime;
 
 var cy = cytoscape();
 
-exports.run = function (path, avoidDoubles, indexes) {
+exports.run = function (path, avoidDoubles, uniqueTests, indexes) {
     fs.readFile(path, function (error, buffer) {
 
         let lines = buffer.toString().split('\r\n');
 
         let nodes = [];
         let edges = [];
-
-        console.log('Lines: ' + lines.length);
 
         console.log('Preparing...');
 
@@ -39,9 +37,15 @@ exports.run = function (path, avoidDoubles, indexes) {
             }
         }
 
+        console.log('Lines: ' + lines.length);
+
         uniqueNodes = [...new Set(nodes)];
 
         console.log('Unique nodes: ' + uniqueNodes.length);
+
+        for (i = 0; i < uniqueTests.length; i++) {
+            console.log('Unique ' + uniqueTests[i] + ': ' + uniqueNodes[uniqueTests[i]]);
+        }
 
         console.log('Preparing done.');
 

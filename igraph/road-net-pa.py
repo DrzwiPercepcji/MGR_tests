@@ -1,75 +1,8 @@
-from igraph import *
-import time
+import core
 
 PATH = '../samples/roadNet-PA.txt'
 AVOID_DOUBLES = True
+UNIQUE_TESTS = [100, 1000, 10000, 100000]
 INDEXES = [100, 1000, 10000, 100000]
 
-graph = Graph()
-
-with open(PATH) as fp:
-
-    vertices = []
-    edges = []
-
-    print('Preparing...')
-
-    line = fp.readline()
-
-    if AVOID_DOUBLES:
-        while line:
-            splited = line.split('\t')
-
-            splited[0] = str(int(splited[0]))
-            splited[1] = str(int(splited[1]))
-
-            if splited[0] < splited[1]:
-                vertices.append(splited[0])
-                vertices.append(splited[1])
-                edges.append(splited)
-
-            line = fp.readline()
-    else:
-        while line:
-            splited = line.split('\t')
-
-            splited[0] = str(int(splited[0]))
-            splited[1] = str(int(splited[1]))
-
-            vertices.append(splited[0])
-            vertices.append(splited[1])
-            edges.append(splited)
-
-            line = fp.readline()
-
-    uniqueVertices = list(set(vertices))
-
-    print('Unique vertices: ' + str(len(uniqueVertices)))
-
-    print('Preparing done.')
-
-start_time = time.time()
-
-for vertex in uniqueVertices:
-    graph.add_vertex(vertex)
-
-graph.add_edges(edges)
-
-print('Loading done.')
-
-print("Loading time: %s seconds" % (time.time() - start_time))
-
-print('Vertices: ' + str(len(graph.vs)))
-print('Edges: ' + str(len(graph.es)))
-
-start_time = time.time()
-
-path = graph.bfs(0)[0]
-
-print('BFS done.')
-
-print("BFS time: %s seconds" % (time.time() - start_time))
-print('BFS elements: ' + str(len(path)))
-
-for index in INDEXES:
-    print(str(index) + ': ' + str(path[index]))
+core.run(PATH, AVOID_DOUBLES, UNIQUE_TESTS, INDEXES)
