@@ -1,4 +1,6 @@
 import org.jgrapht.Graph;
+import org.jgrapht.GraphPath;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.jgrapht.traverse.BreadthFirstIterator;
@@ -9,12 +11,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 
 public abstract class Core {
 
-    public static void run(String path, Boolean avoidDoubles, Integer[] uniqueTests, Integer[] indexes) {
+    public static void run(String path, Boolean avoidDoubles, Integer[] uniqueTests, Integer[] indexes, String[] algorithms) {
 
         long startTime;
         long endTime;
@@ -101,32 +104,47 @@ public abstract class Core {
         GraphIterator<String, DefaultEdge> iterator;
         List<String> visited;
 
-        startTime = System.currentTimeMillis();
-        iterator = new BreadthFirstIterator<>(graph);
+        if (Arrays.stream(algorithms).anyMatch("bfs"::equals)) {
+            startTime = System.currentTimeMillis();
+            iterator = new BreadthFirstIterator<>(graph);
 
-        visited = new ArrayList<>();
-        iterator.forEachRemaining(visited::add);
+            visited = new ArrayList<>();
+            iterator.forEachRemaining(visited::add);
 
-        endTime = System.currentTimeMillis() - startTime;
-        System.out.println("BFS time: " + endTime);
-        System.out.println("BFS elements: " + visited.size());
+            endTime = System.currentTimeMillis() - startTime;
+            System.out.println("BFS time: " + endTime);
+            System.out.println("BFS elements: " + visited.size());
 
-        for (Integer index : indexes) {
-            System.out.println(index + ": " + visited.get(index));
+            for (Integer index : indexes) {
+                System.out.println(index + ": " + visited.get(index));
+            }
         }
 
-        startTime = System.currentTimeMillis();
-        iterator = new DepthFirstIterator<>(graph);
+        if (Arrays.stream(algorithms).anyMatch("dfs"::equals)) {
+            startTime = System.currentTimeMillis();
+            iterator = new DepthFirstIterator<>(graph);
 
-        visited = new ArrayList<>();
-        iterator.forEachRemaining(visited::add);
+            visited = new ArrayList<>();
+            iterator.forEachRemaining(visited::add);
 
-        endTime = System.currentTimeMillis() - startTime;
-        System.out.println("DFS time: " + endTime);
-        System.out.println("DFS elements: " + visited.size());
+            endTime = System.currentTimeMillis() - startTime;
+            System.out.println("DFS time: " + endTime);
+            System.out.println("DFS elements: " + visited.size());
 
-        for (Integer index : indexes) {
-            System.out.println(index + ": " + visited.get(index));
+            for (Integer index : indexes) {
+                System.out.println(index + ": " + visited.get(index));
+            }
+        }
+
+        if (Arrays.stream(algorithms).anyMatch("shortest"::equals)) {
+            startTime = System.currentTimeMillis();
+            DijkstraShortestPath shortest = new DijkstraShortestPath(graph);
+
+            GraphPath shortestPath = shortest.getPath("0", "10000");
+
+            endTime = System.currentTimeMillis() - startTime;
+            System.out.println("Shortest time: " + endTime);
+            System.out.println("Shortest elements: " + shortestPath.getEdgeList().size());
         }
     }
 }

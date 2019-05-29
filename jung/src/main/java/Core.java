@@ -1,16 +1,18 @@
 import edu.uci.ics.jung.algorithms.shortestpath.BFSDistanceLabeler;
+import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;
 import edu.uci.ics.jung.graph.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 
 public abstract class Core {
 
-    public static void run(String path, Boolean avoidDoubles, Integer[] uniqueTests, Integer[] indexes) {
+    public static void run(String path, Boolean avoidDoubles, Integer[] uniqueTests, Integer[] indexes, String[] algorithms) {
 
         long startTime;
         long endTime;
@@ -96,18 +98,31 @@ public abstract class Core {
         System.out.println("Vertices: " + graph.getVertexCount());
         System.out.println("Edges: " + graph.getEdgeCount());
 
-        startTime = System.currentTimeMillis();
-        BFSDistanceLabeler bfs = new BFSDistanceLabeler();
-        bfs.labelDistances(graph, "0");
+        if (Arrays.stream(algorithms).anyMatch("bfs"::equals)) {
+            startTime = System.currentTimeMillis();
+            BFSDistanceLabeler bfs = new BFSDistanceLabeler();
+            bfs.labelDistances(graph, "0");
 
-        List<String> visited = bfs.getVerticesInOrderVisited();
+            List<String> visited = bfs.getVerticesInOrderVisited();
 
-        endTime = System.currentTimeMillis() - startTime;
-        System.out.println("BFS time: " + endTime);
-        System.out.println("BFS elements: " + visited.size());
+            endTime = System.currentTimeMillis() - startTime;
+            System.out.println("BFS time: " + endTime);
+            System.out.println("BFS elements: " + visited.size());
 
-        for (Integer index : indexes) {
-            System.out.println(index + ": " + visited.get(index));
+            for (Integer index : indexes) {
+                System.out.println(index + ": " + visited.get(index));
+            }
+        }
+
+        if (Arrays.stream(algorithms).anyMatch("shortest"::equals)) {
+            startTime = System.currentTimeMillis();
+            DijkstraShortestPath shortest = new DijkstraShortestPath(graph);
+
+            List<String> shortestPath = shortest.getPath("0", "10000");
+
+            endTime = System.currentTimeMillis() - startTime;
+            System.out.println("Shortest time: " + endTime);
+            System.out.println("Shortest elements: " + shortestPath.size());
         }
     }
 }

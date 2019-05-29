@@ -3,7 +3,7 @@ import time
 
 graph = Graph()
 
-def run(path, avoidDoubles, uniqueTests, indexes):
+def run(path, avoidDoubles, uniqueTests, indexes, algorithms):
 
     with open(path) as fp:
 
@@ -68,14 +68,25 @@ def run(path, avoidDoubles, uniqueTests, indexes):
     print('Vertices: ' + str(len(graph.vs)))
     print('Edges: ' + str(len(graph.es)))
 
-    start_time = time.time()
+    if 'bfs' in algorithms:
+        start_time = time.time()
 
-    path = graph.bfs(0)[0]
+        path = graph.bfs(0)[0]
 
-    print('BFS done.')
+        print('BFS done.')
 
-    print("BFS time: %s seconds" % (time.time() - start_time))
-    print('BFS elements: ' + str(len(path)))
+        print("BFS time: %s seconds" % (time.time() - start_time))
+        print('BFS elements: ' + str(len(path)))
 
-    for index in indexes:
-        print(str(index) + ': ' + str(path[index]))
+        for index in indexes:
+            print(str(index) + ': ' + str(path[index]))
+    
+    if 'shortest' in algorithms:
+        start_time = time.time()
+
+        path = graph.shortest_paths_dijkstra(0, 10000)
+
+        print('Shortest done.')
+
+        print("Shortest time: %s seconds" % (time.time() - start_time))
+        print('Shortest elements: ' + str(path))

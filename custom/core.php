@@ -1,12 +1,7 @@
 <?php
-require_once 'vendor/autoload.php';
-
-use \Fhaculty\Graph\Graph as Graph;
-use Graphp\Algorithms\Search\BreadthFirst;
-use Graphp\Algorithms\Search\DepthFirst;
-use Graphp\Algorithms\ShortestPath\Dijkstra;
-
 ini_set('memory_limit', '-1');
+
+include './graph.php';
 
 $graph = new Graph();
 
@@ -70,50 +65,26 @@ $realVertices = [];
 $startTime = microtime(true);
 
 foreach ($uniqueVertices as $vertex) {
-    $realVertices[$vertex] = $graph->createVertex('v' . $vertex);
+    $realVertices[$vertex] = $graph->addVertex('v' . $vertex);
 }
 
 foreach ($edges as $edge) {
-    $realVertices[$edge[0]]->createEdge($realVertices[$edge[1]]);
+    $graph->addEdge('v' . $edge[0], 'v' . $edge[1]);
 }
 
 echo 'Loading done.' . PHP_EOL;
 
 echo 'Loading time: ' . (microtime(true) - $startTime) .  PHP_EOL;
 
-echo 'Vertices: ' . count($graph->getVertices())  . PHP_EOL;
-echo 'Edges: ' . count($graph->getEdges()) . PHP_EOL;
+echo 'Vertices: ' . count($graph->vertices) . PHP_EOL;
+echo 'Edges: ' . count($graph->edges) . PHP_EOL;
 
-if (in_array('bfs', ALGORITHMS)) {
-    $startTime = microtime(true);
-    $bfs = new BreadthFirst($graph->getVertex('v0'));
-    $bfsResult = $bfs->getVertices()->getIds();
+$startTime = microtime(true);
+$bfsResult = $graph->BFS();
 
-    echo 'BFS time: ' . (microtime(true) - $startTime) . PHP_EOL;
-    echo 'BFS elements: ' . count($bfsResult) . PHP_EOL;
+echo 'BFS time: ' . (microtime(true) - $startTime) . PHP_EOL;
+echo 'BFS elements: ' . count($bfsResult) . PHP_EOL;
 
-    foreach (INDEXES as $index) {
-        echo $index . ': ' . $bfsResult[$index] . PHP_EOL;
-    }
-}
-
-if (in_array('dfs', ALGORITHMS)) {
-    $startTime = microtime(true);
-    $dfs = new DepthFirst($graph->getVertex('v0'));
-    $dfsResult = $dfs->getVertices()->getIds();
-
-    echo 'DFS time: ' . (microtime(true) - $startTime) . PHP_EOL;
-    echo 'DSF elements: ' . count($dfsResult) . PHP_EOL;
-
-    foreach (INDEXES as $index) {
-        echo $index . ': ' . $dfsResult[$index] . PHP_EOL;
-    }
-}
-
-if (in_array('shortest', ALGORITHMS)) {
-    $startTime = microtime(true);
-    $shortest = new Dijkstra($graph->getVertex('v0'));
-    $shortestResult = $shortest->getEdgesTo($graph->getVertex('v10000'));
-
-    echo count($shortestResult);
+foreach (INDEXES as $index) {
+    echo $index . ': ' . $bfsResult[$index] . PHP_EOL;
 }

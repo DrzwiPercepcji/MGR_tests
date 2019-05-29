@@ -7,7 +7,7 @@ var endTime;
 
 var cy = cytoscape();
 
-exports.run = function (path, avoidDoubles, uniqueTests, indexes) {
+exports.run = function (path, avoidDoubles, uniqueTests, indexes, algorithms) {
     fs.readFile(path, function (error, buffer) {
 
         let lines = buffer.toString().split('\r\n');
@@ -67,8 +67,17 @@ exports.run = function (path, avoidDoubles, uniqueTests, indexes) {
         console.log('Nodes: ' + cy.nodes().length);
         console.log('Edges: ' + cy.edges().length);
 
-        bfs(indexes);
-        dfs(indexes);
+        if (algorithms.includes('bfs')) {
+            bfs(indexes);
+        }
+
+        if (algorithms.includes('dfs')) {
+            dfs(indexes);
+        }
+
+        if (algorithms.includes('shortest')) {
+            shortest(indexes);
+        }
     });
 }
 
@@ -126,4 +135,21 @@ function dfs(indexes) {
     for (i = 0; i < results.length; i++) {
         console.log(results[i]);
     }
+}
+
+function shortest(indexes) {
+    startTime = new Date();
+
+    var dijkstra = cy.elements().dijkstra('#n0');
+
+    var pathTo = dijkstra.pathTo(cy.$('#n10000'));
+    var distTo = dijkstra.distanceTo(cy.$('#n10000'));
+
+    console.log('Shortest done.');
+
+    endTime = new Date() - startTime;
+    console.info('Shortest time: %dms', endTime);
+
+    console.log('Shortest elements: ' + pathTo.length);
+    console.log('Shortest distance: ' + distTo);
 }
