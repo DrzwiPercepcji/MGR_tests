@@ -5,8 +5,11 @@ class Graph
     public $vertices = [];
     public $edges = [];
 
+    private $queue = [];
     private $visited = [];
     private $neighborhoods = [];
+
+    private $bfsResult = [];
 
     public function addVertex($id)
     {
@@ -23,34 +26,41 @@ class Graph
     public function BFS()
     {
         $this->visited = [];
+        $this->bfsResult = [];
 
         foreach ($this->vertices as $vertex) {
             $this->visited[$vertex] = false;
         }
 
-        return array_merge(['v0'], $this->internalBFS('v0'));
+        $this->bfsResult[] = 'v0';
+        $this->internalBFS('v0');
+
+        return $this->bfsResult;
     }
 
     private function internalBFS($vertexIndex)
     {
         $this->visited[$vertexIndex] = true;
 
-        $result = [];
-        $queue = [];
-
-        foreach ($this->vertices as $vertex) {
-            if (@$this->neighborhoods[$vertexIndex][$vertex] && $this->visited[$vertex] == false) {
-                $this->visited[$vertex] = true;
-
-                $result[] = $vertex;
-                $queue[] = $vertex;
+        foreach ($this->neighborhoods[$vertexIndex] as $key => $value) {
+            if ($this->visited[$key] == false) {
+                $this->visited[$key] = true;
+                $this->bfsResult[] = $key;
+                $this->queue[] = $key;
             }
         }
 
-        foreach ($queue as $next) {
-            $result = array_merge($result, $this->internalBFS($next));
+        if (!empty($this->queue)) {
+            $this->internalBFS(array_shift($this->queue));
         }
+    }
 
-        return $result;
+    public function printNotListedInBFS()
+    {
+        foreach ($this->vertices as $vertex) {
+            if ($this->visited[$vertex] == false) {
+                echo $vertex . PHP_EOL;
+            }
+        }
     }
 }

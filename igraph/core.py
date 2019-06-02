@@ -19,10 +19,12 @@ def run(path, avoidDoubles, uniqueTests, indexes, algorithms):
             while line:
                 splited = line.split('\t')
 
-                splited[0] = str(int(splited[0]))
-                splited[1] = str(int(splited[1]))
+                splited[0] = int(splited[0])
+                splited[1] = int(splited[1])
 
                 if splited[0] < splited[1]:
+                    splited[0] = str(splited[0])
+                    splited[1] = str(splited[1])
                     vertices.append(splited[0])
                     vertices.append(splited[1])
                     edges.append(splited)
@@ -42,10 +44,11 @@ def run(path, avoidDoubles, uniqueTests, indexes, algorithms):
 
                 line = fp.readline()
                 lines += 1
-        
+
         print('Lines: ' + str(lines))
 
         uniqueVertices = list(dict.fromkeys(vertices))
+        #uniqueVertices.sort()
 
         print('Unique vertices: ' + str(len(uniqueVertices)))
 
@@ -79,8 +82,8 @@ def run(path, avoidDoubles, uniqueTests, indexes, algorithms):
         print('BFS elements: ' + str(len(path)))
 
         for index in indexes:
-            print(str(index) + ': ' + str(path[index]))
-    
+            print(str(index) + ': ' + str(uniqueVertices[path[index]]))
+
     if 'shortest' in algorithms:
         start_time = time.time()
 

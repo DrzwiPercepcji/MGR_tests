@@ -113,7 +113,8 @@ if (in_array('dfs', ALGORITHMS)) {
 if (in_array('shortest', ALGORITHMS)) {
     $startTime = microtime(true);
     $shortest = new Dijkstra($graph->getVertex('v0'));
-    $shortestResult = $shortest->getEdgesTo($graph->getVertex('v10000'));
+    $shortestResult = $shortest->getEdgesTo($graph->getVertex('v70'));
 
-    echo count($shortestResult);
+    echo 'Shortest time: ' . (microtime(true) - $startTime) . PHP_EOL;
+    echo 'Shortest elements: ' . count($shortestResult) . PHP_EOL;
 }

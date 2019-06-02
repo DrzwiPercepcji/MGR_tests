@@ -88,3 +88,6 @@ echo 'BFS elements: ' . count($bfsResult) . PHP_EOL;
 foreach (INDEXES as $index) {
     echo $index . ': ' . $bfsResult[$index] . PHP_EOL;
 }
+
+//echo 'Not connected: ' . PHP_EOL;
+//$graph->printNotListedInBFS();

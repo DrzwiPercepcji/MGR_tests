@@ -21,7 +21,7 @@ exports.run = function (path, avoidDoubles, uniqueTests, indexes, algorithms) {
             for (i = 0; i < lines.length; i++) {
                 let splited = lines[i].split('\t');
 
-                if (splited[0] < splited[1]) {
+                if (parseInt(splited[0]) < parseInt(splited[1])) {
                     nodes.push(splited[0]);
                     nodes.push(splited[1]);
                     edges.push(splited);
