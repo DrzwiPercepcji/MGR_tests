@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>quickgraph.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
@@ -55,8 +58,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core.cs" />
     <Compile Include="Enron.cs" />
     <Compile Include="Example.cs" />
+    <Compile Include="App.cs" />
     <Compile Include="RoadNetPA.cs" />
     <Compile Include="Test.cs" />
   </ItemGroup>

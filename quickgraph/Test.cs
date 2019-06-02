@@ -1,30 +1,14 @@
-﻿using System;
-
-namespace quickgraph
+﻿namespace quickgraph
 {
-	class Test
+	class Test : Core
 	{
-		static void Main(string[] args)
+		public Test()
 		{
-			string input = Console.ReadLine();
-
-			switch (input)
-			{
-				case "Example":
-					Example.Run();
-					break;
-
-				case "RoadNetPA":
-					RoadNetPA.Run();
-					break;
-
-				case "Enron":
-					Enron.Run();
-					break;
-			}
-
-			Console.ReadKey();
-			System.Environment.Exit(1);
+			path = "../../../samples/test2.txt";
+			avoidDoubles = true;
+			uniqueTests = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+			indexes = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+			algorithms = new string[] { "bfs", "dfs" };
 		}
 	}
 }
