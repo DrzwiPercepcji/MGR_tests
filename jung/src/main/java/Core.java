@@ -1,7 +1,15 @@
+import com.google.common.base.Function;
 import edu.uci.ics.jung.algorithms.shortestpath.BFSDistanceLabeler;
 import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;
 import edu.uci.ics.jung.graph.*;
+import edu.uci.ics.jung.visualization.*;
+import edu.uci.ics.jung.algorithms.layout.*;
+import edu.uci.ics.jung.visualization.decorators.EdgeShape;
 
+import java.awt.*;
+import javax.swing.JFrame;
+
+import java.awt.geom.Ellipse2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -123,6 +131,22 @@ public abstract class Core {
             endTime = System.currentTimeMillis() - startTime;
             System.out.println("Shortest time: " + endTime);
             System.out.println("Shortest elements: " + shortestPath.size());
+        }
+
+        if (Arrays.stream(algorithms).anyMatch("render"::equals)) {
+            ISOMLayout layout = new ISOMLayout(graph);
+            VisualizationImageServer vs = new VisualizationImageServer(layout, new Dimension(800, 800));
+
+            Function<String, Shape> vertexSize = i -> new Ellipse2D.Double(-4, -4, 8, 8);
+
+            vs.getRenderContext().setEdgeShapeTransformer(EdgeShape.line(graph));
+            vs.getRenderContext().setVertexShapeTransformer(vertexSize);
+
+            JFrame frame = new JFrame();
+            frame.getContentPane().add(vs);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.pack();
+            frame.setVisible(true);
         }
     }
 }

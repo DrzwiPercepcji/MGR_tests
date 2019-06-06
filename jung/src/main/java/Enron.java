@@ -4,7 +4,7 @@ public class Enron extends Core {
     private static final Boolean AVOID_DOUBLES = true;
     private static final Integer[] UNIQUE_TESTS = {100, 1000, 10000};
     private static final Integer[] INDEXES = {100, 1000, 10000};
-    private static final String[] ALGORITHMS = {"bfs", "dfs", "shortest"};
+    private static final String[] ALGORITHMS = {"bfs", "dfs", "shortest", "render"};
 
     public static void main(String[] args) {
         run(PATH, AVOID_DOUBLES, UNIQUE_TESTS, INDEXES, ALGORITHMS);
